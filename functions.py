@@ -64,13 +64,22 @@ def generate_structure(initial_structure, paths):
                  }
         }
     """
-    path_dictionary = {}
-    current_level = path_dictionary
-    for path in paths:
-        if path != paths[:-1]:
-            current_level = add_level(current_level, path)
-        else:
-            current_level
+    initial_structure[paths[0]]=''
+    pointer_to_the_next_level = initial_structure
+    for x in range(0,len(paths)):
+        if (x+1) <= len(paths)-1:
+            if x == len(paths)-2:
+                # do list
+                temporal_list = []
+                temporal_list.append(paths[x+1])
+                pointer_to_the_next_level[paths[x]]=temporal_list
+            else:
+                # do dict
+                temporal_dictionary = {}
+                temporal_dictionary[paths[x+1]] = ''
+                pointer_to_the_next_level[paths[x]] = temporal_dictionary
+                pointer_to_the_next_level = temporal_dictionary
+    return initial_structure
 
 
 def add_level(dictonary, element):
