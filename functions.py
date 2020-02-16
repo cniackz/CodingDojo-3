@@ -17,8 +17,7 @@ def parse_path(path):
         if element != '':
             result.append(element)
     return result
-
-
+    
 def generate_structure(initial_structure, paths):
     """
     Generate/Update a structure based on paths list
@@ -64,21 +63,32 @@ def generate_structure(initial_structure, paths):
                  }
         }
     """
-    initial_structure[paths[0]]=''
-    pointer_to_the_next_level = initial_structure
+    pointer_to_next_level = initial_structure
     for x in range(0,len(paths)):
-        if (x+1) <= len(paths)-1:
-            if x == len(paths)-2:
-                # do list
-                temporal_list = []
-                temporal_list.append(paths[x+1])
-                pointer_to_the_next_level[paths[x]]=temporal_list
+        if x == len(paths)-1:
+            # do list
+            if paths[x] in pointer_to_next_level:
+                # do nothing bc file is in it
+                pass
             else:
-                # do dict
-                temporal_dictionary = {}
-                temporal_dictionary[paths[x+1]] = ''
-                pointer_to_the_next_level[paths[x]] = temporal_dictionary
-                pointer_to_the_next_level = temporal_dictionary
+                # append to new list
+                pointer_to_next_level.append(paths[x])
+        else:
+            # do dict (folders)
+            if paths[x] in pointer_to_next_level:
+                # point to next existing struct
+                pointer_to_next_level = pointer_to_next_level[paths[x]]
+            else:
+                # create new struct
+                if x == len(paths)-2:
+                    # point to next new list
+                    pointer_to_next_level[paths[x]] = []
+                    pointer_to_next_level = pointer_to_next_level[paths[x]]
+                else:
+                    # point to next new folder
+                    pointer_to_next_level[paths[x]] = {}
+                    pointer_to_next_level = pointer_to_next_level[paths[x]]
+            
     return initial_structure
 
 
