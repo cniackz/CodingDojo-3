@@ -17,6 +17,7 @@ def parse_path(path):
         if element != '':
             result.append(element)
     return result
+
     
 def generate_structure(initial_structure, paths):
     """
