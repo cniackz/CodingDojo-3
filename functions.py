@@ -18,6 +18,35 @@ def parse_path(path):
             result.append(element)
     return result
 
+def create_structure(ptr,folder,option):
+    if option == 'dic':
+        ptr[folder] = {}
+    if option == 'lis':
+        ptr[folder] = []
+    ptr = ptr[folder]
+    return ptr
+
+
+def get_next_structure(ptr,folder,option):
+    if folder in ptr:
+        # point to next existing struct
+        ptr = ptr[folder]
+    else:
+        ptr = create_structure(ptr,folder,option)
+    return ptr
+
+
+def create_folders(ptr,paths,option):
+    folders = paths[:-2]
+    for folder in folders:
+        ptr = get_next_structure(ptr,folder,option)
+    return ptr
+
+
+def create_list(ptr,paths,option):
+    folder = paths[-2]
+    ptr = get_next_structure(ptr,folder,option)
+    return ptr
 
 def generate_structure(initial_structure, paths):
     """
@@ -64,34 +93,19 @@ def generate_structure(initial_structure, paths):
                  }
         }
     """
-    pointer_to_next_level = initial_structure
-    folders = paths[:-2]
-    for folder in folders:
-        if folder in pointer_to_next_level:
-            # point to next existing struct
-            pointer_to_next_level = pointer_to_next_level[folder]
-        else:
-            # dict is for all except last folder
-            # create new dict
-            pointer_to_next_level[folder] = {}
-            # point to next new dict
-            pointer_to_next_level = pointer_to_next_level[folder]
+    # all you need is one pointer to allocate new nested structure
+    ptr = initial_structure
+    
+    # 1. Create folders if needed
+    ptr = create_folders(ptr,paths,'dic')
 
-    # last folder
-    folder = paths[-2]
-    if folder in pointer_to_next_level:
-        # point to next existing struct
-        pointer_to_next_level = pointer_to_next_level[folder]
-    else:
-        # list is for last folder
-        # create new list
-        pointer_to_next_level[folder] = []
-        # point to next new list
-        pointer_to_next_level = pointer_to_next_level[folder]
+    # 2. In last folder create list if needed
+    ptr = create_list(ptr,paths,'lis')
                 
-    # Append the file to the list
-    pointer_to_next_level.append(paths[-1])
+    # 3. Append the file to the list if any
+    ptr.append(paths[-1])
             
+    # 4. return final structure
     return initial_structure
 
 
