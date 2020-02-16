@@ -92,7 +92,7 @@ def generate_structure(initial_structure, paths):
     Output:
         {'home': {
                   'My Folder': ['File(Dojo).txt', 'File2(Dojo).txt'],
-                  'Second Folder': []
+                  'Second Folder': ['foo-bar']
                  }
         }
     Input:
@@ -128,10 +128,10 @@ def get_structure(dir_list):
     :param dir_list: ['/home/foo-bar/file1.txt', '/home/bar/file1.txt', ...]
     :return: {
             'home': {
-                'foo-bar': ['foo-bar'],
+                'foo-bar': ['file1.txt'],
                 'bar': ['file1.txt'],
                 .
-                d.
+                .
                 .
             },
             .
