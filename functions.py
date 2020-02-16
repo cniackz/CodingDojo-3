@@ -67,15 +67,15 @@ def generate_structure(initial_structure, paths):
     pointer_to_next_level = initial_structure
     for x in range(0,len(paths)):
         if x == len(paths)-1:
-            # do list
+            # Append files
             if paths[x] in pointer_to_next_level:
-                # do nothing bc file is in it
+                # do nothing because file is in it
                 pass
             else:
-                # append to new list
+                # append file to list
                 pointer_to_next_level.append(paths[x])
         else:
-            # do dict (folders)
+            # Create structures
             if paths[x] in pointer_to_next_level:
                 # point to next existing struct
                 pointer_to_next_level = pointer_to_next_level[paths[x]]
