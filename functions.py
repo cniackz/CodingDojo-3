@@ -19,6 +19,10 @@ def parse_path(path):
     return result
 
 def create_structure(ptr,folder,option):
+    """
+    It creates the structure for the next level 
+    and change the pointer to new level
+    """
     if option == 'dic':
         ptr[folder] = {}
     if option == 'lis':
@@ -28,6 +32,9 @@ def create_structure(ptr,folder,option):
 
 
 def get_next_structure(ptr,folder,option):
+    """
+    It gets the next existing level when no new structure is needed.
+    """
     if folder in ptr:
         # point to next existing struct
         ptr = ptr[folder]
@@ -37,14 +44,20 @@ def get_next_structure(ptr,folder,option):
 
 
 def create_folders(ptr,paths,option):
-    folders = paths[:-2]
+    """
+    It creates a folder in the next level for all except the last second element
+    """
+    folders = paths[:-2] # all except the last second element
     for folder in folders:
         ptr = get_next_structure(ptr,folder,option)
     return ptr
 
 
 def create_list(ptr,paths,option):
-    folder = paths[-2]
+    """
+    It creates a list in the last second element
+    """
+    folder = paths[-2] # for last second element
     ptr = get_next_structure(ptr,folder,option)
     return ptr
 
