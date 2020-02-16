@@ -122,11 +122,6 @@ def generate_structure(initial_structure, paths):
     return initial_structure
 
 
-def add_level(dictonary, element):
-    dictonary[element] = {}
-    return dictonary[element]
-
-
 def get_structure(dir_list):
     """
 

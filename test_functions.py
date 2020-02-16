@@ -1,4 +1,4 @@
-from functions import parse_path, generate_structure
+from functions import parse_path, generate_structure, get_structure
 
 
 def test_parse_path_home():
@@ -49,3 +49,14 @@ def test_add_file_to_existing_structure():
     paths = ['home', 'My Folder', 'File2(Dojo).txt']
     result = generate_structure(initial_structure, paths)
     assert result == {'home': {'My Folder': ['File(Dojo).txt','File2(Dojo).txt']}}
+
+def test_get_structure():
+    param = ['/home/foo-bar/file1.txt', '/home/bar/file1.txt']
+    expected = {
+        'home': {
+            'foo-bar': ['file1.txt'],
+            'bar': ['file1.txt'],
+        },
+    }
+    result = get_structure(param)
+    assert result == expected
