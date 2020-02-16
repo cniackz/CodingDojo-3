@@ -65,26 +65,30 @@ def generate_structure(initial_structure, paths):
         }
     """
     pointer_to_next_level = initial_structure
-    folders = paths[:-1]
+    folders = paths[:-2]
     for folder in folders:
         if folder in pointer_to_next_level:
             # point to next existing struct
             pointer_to_next_level = pointer_to_next_level[folder]
         else:
-            # create new structs
-            if folders[-1] == folder:
-                # list is for last folder
-                # create new list
-                pointer_to_next_level[folder] = []
-                # point to next new list
-                pointer_to_next_level = pointer_to_next_level[folder]
-            else:
-                # dict is for all except last folder
-                # create new dict
-                pointer_to_next_level[folder] = {}
-                # point to next new dict
-                pointer_to_next_level = pointer_to_next_level[folder]
-    
+            # dict is for all except last folder
+            # create new dict
+            pointer_to_next_level[folder] = {}
+            # point to next new dict
+            pointer_to_next_level = pointer_to_next_level[folder]
+
+    # last folder
+    folder = paths[-2]
+    if folder in pointer_to_next_level:
+        # point to next existing struct
+        pointer_to_next_level = pointer_to_next_level[folder]
+    else:
+        # list is for last folder
+        # create new list
+        pointer_to_next_level[folder] = []
+        # point to next new list
+        pointer_to_next_level = pointer_to_next_level[folder]
+                
     # Append the file to the list
     pointer_to_next_level.append(paths[-1])
             
