@@ -65,30 +65,28 @@ def generate_structure(initial_structure, paths):
         }
     """
     pointer_to_next_level = initial_structure
-    for x in range(0,len(paths)):
-        if x == len(paths)-1:
-            # Append files
-            if paths[x] in pointer_to_next_level:
-                # do nothing because file is in it
-                pass
-            else:
-                # append file to list
-                pointer_to_next_level.append(paths[x])
+    folders = paths[:-1]
+    for folder in folders:
+        if folder in pointer_to_next_level:
+            # point to next existing struct
+            pointer_to_next_level = pointer_to_next_level[folder]
         else:
-            # Create structures
-            if paths[x] in pointer_to_next_level:
-                # point to next existing struct
-                pointer_to_next_level = pointer_to_next_level[paths[x]]
+            # create new structs
+            if folders[-1] == folder:
+                # list is for last folder
+                # create new list
+                pointer_to_next_level[folder] = []
+                # point to next new list
+                pointer_to_next_level = pointer_to_next_level[folder]
             else:
-                # create new struct
-                if x == len(paths)-2:
-                    # point to next new list
-                    pointer_to_next_level[paths[x]] = []
-                    pointer_to_next_level = pointer_to_next_level[paths[x]]
-                else:
-                    # point to next new folder
-                    pointer_to_next_level[paths[x]] = {}
-                    pointer_to_next_level = pointer_to_next_level[paths[x]]
+                # dict is for all except last folder
+                # create new dict
+                pointer_to_next_level[folder] = {}
+                # point to next new dict
+                pointer_to_next_level = pointer_to_next_level[folder]
+    
+    # Append the file to the list
+    pointer_to_next_level.append(paths[-1])
             
     return initial_structure
 
@@ -96,7 +94,6 @@ def generate_structure(initial_structure, paths):
 def add_level(dictonary, element):
     dictonary[element] = {}
     return dictonary[element]
-
 
 
 def get_structure(dir_list):
