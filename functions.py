@@ -18,7 +18,7 @@ def parse_path(path):
             result.append(element)
     return result
 
-    
+
 def generate_structure(initial_structure, paths):
     """
     Generate/Update a structure based on paths list
