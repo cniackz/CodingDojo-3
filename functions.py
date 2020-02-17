@@ -96,7 +96,7 @@ def generate_structure(initial_structure, paths):
                  }
         }
     Input:
-        initial_structure: {'home': {'My Folder': ['File(Dojo).txt', 'File2(Dojo).txt']}}
+        initial_structure: {'home': {'My Folder': ['File(Dojo).txt', 'File2(Dojo).txt'],'Second Folder':[]}}
         paths: ['home', 'Third Folder', 'another', 'another']
     Output:
         {'home': {

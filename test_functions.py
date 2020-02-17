@@ -60,3 +60,17 @@ def test_get_structure():
     }
     result = get_structure(param)
     assert result == expected
+
+
+def test_one_more_test():
+    initial_structure = {'home': {'My Folder': ['File(Dojo).txt', 'File2(Dojo).txt'],'Second Folder':[]}}
+    paths = ['home', 'Third Folder', 'another', 'another']
+    expected = {
+        'home': {
+            'My Folder': ['File(Dojo).txt', 'File2(Dojo).txt'],
+            'Second Folder': [],
+            'Third Folder': {'another': ['another']}
+        }
+    }
+    result = generate_structure(initial_structure,paths)
+    assert result == expected
